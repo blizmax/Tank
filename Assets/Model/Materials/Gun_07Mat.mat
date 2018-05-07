@@ -82,9 +82,9 @@ Material:
     - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.00347
+    - _Outline: 0.00085
     - _Parallax: 0.02
-    - _ShadowContrast: 0.5
+    - _ShadowContrast: 0.25
     - _Shininess: 0.13
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.166
