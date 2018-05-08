@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ludaiMat
-  m_Shader: {fileID: 4800000, guid: ba6b934c03c3b0543a063a9fa41b5c34, type: 3}
+  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 2b6a170189c15944d8fabc0bbabefd24, type: 3}
+        m_Texture: {fileID: 2800000, guid: c88f505236f2ec4438fde1b217029e2b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -51,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 7c72a77dd83374347a52fc7d80d98c02, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -62,18 +62,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: d440902fad11e807d00044888d76c639, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SSSTex:
-        m_Texture: {fileID: 2800000, guid: b4c1d86fc26e77140b92ce359fb7e676, type: 3}
+        m_Texture: {fileID: 2800000, guid: d440902fad11e807d00044888d76c639, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 2.75
     - _Cutoff: 0.5
-    - _DarkenInnerLine: 0
+    - _DarkenInnerLine: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
@@ -84,10 +92,10 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 0.01
     - _Parallax: 0.02
-    - _ShadowContrast: 0.5
-    - _Shininess: 0.13
+    - _ShadowContrast: -0.02
+    - _Shininess: 0.06
     - _SmoothnessTextureChannel: 0
-    - _SpecStep: 0.166
+    - _SpecStep: 0.243
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0

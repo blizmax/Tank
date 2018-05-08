@@ -21,6 +21,7 @@ ModelImporter:
     100026: ludai
     100028: //RootNode
     100030: Turret_02
+    100032: t3485cf_root
     400000: bedspring_021c
     400002: bedspring_022c
     400004: bedspring_1c
@@ -37,6 +38,7 @@ ModelImporter:
     400026: ludai
     400028: //RootNode
     400030: Turret_02
+    400032: t3485cf_root
     2100000: bedspring_021cMat
     2100002: bedspring_022cMat
     2100004: bedspring_1cMat
@@ -102,37 +104,37 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis01Mat
-    second: {fileID: 2100000, guid: 702a979074af8914f889b241acfd6772, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis02Mat
-    second: {fileID: 2100000, guid: 41fa767d985460a4182f0410b17ca2a4, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis03Mat
-    second: {fileID: 2100000, guid: f663a5e18a60c214399f5d6055072c1f, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis04Mat
-    second: {fileID: 2100000, guid: 32b7ec72775835b47a9748429db9cd90, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis05Mat
-    second: {fileID: 2100000, guid: 035a98458a235564ba688f3c91475e4c, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis06Mat
-    second: {fileID: 2100000, guid: 4f50f2182af5e8b428aaaa0e20964d6d, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chassis07Mat
-    second: {fileID: 2100000, guid: 0b58205a3b482dc45ac1af8f05344ff5, type: 2}
+    second: {fileID: 2100000, guid: dbc65a3fa67df83489483d9ac65e2395, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -152,22 +154,22 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: bedspring_021cMat
-    second: {fileID: 2100000, guid: 96b0f7a05c71e6d448fb8bfb9b018c28, type: 2}
+    second: {fileID: 2100000, guid: b156822a96545404e8941874326d9f34, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: bedspring_022cMat
-    second: {fileID: 2100000, guid: 96b0f7a05c71e6d448fb8bfb9b018c28, type: 2}
+    second: {fileID: 2100000, guid: b156822a96545404e8941874326d9f34, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: bedspring_1cMat
-    second: {fileID: 2100000, guid: 96b0f7a05c71e6d448fb8bfb9b018c28, type: 2}
+    second: {fileID: 2100000, guid: b156822a96545404e8941874326d9f34, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: bedspring_2cMat
-    second: {fileID: 2100000, guid: 96b0f7a05c71e6d448fb8bfb9b018c28, type: 2}
+    second: {fileID: 2100000, guid: b156822a96545404e8941874326d9f34, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -215,7 +217,7 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
-    preserveHierarchy: 0
+    preserveHierarchy: 1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001

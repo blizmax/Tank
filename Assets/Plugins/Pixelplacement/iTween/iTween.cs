@@ -188,7 +188,7 @@ public class iTween : MonoBehaviour
 		public static LoopType loopType = LoopType.none;
 		public static EaseType easeType = iTween.EaseType.easeOutExpo;
 		public static float lookSpeed = 3f;
-		public static bool isLocal = false;
+		public static bool isLocal = true;
 		public static Space space = Space.Self;
 		public static bool orientToPath = false;
 		public static Color color = Color.white;

@@ -25,59 +25,62 @@
 		*/
 		SubShader
 	{
-		Tags{ "RenderType" = "Opaque" }
+			Tags{ "RenderType" = "Opaque" "Queue" = "Geometry" }
+			LOD 100
+			Pass
+		{
+			Name "OUTLINE"
+			Cull Front
+			CGPROGRAM
 
-		Pass
-	{
-		Name "OUTLINE"
-		Tags{ "LightMode" = "Always" }
-		Cull Front
-		ZWrite On
-		ColorMask RGB
-		CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
+#pragma vertex vert  
+#pragma fragment frag  
 
-#include "UnityCG.cginc"
+#include "UnityCG.cginc"  
 
-		struct appdata
-	{
-		float4 vertex : POSITION;
-		float3 normal : NORMAL;
-		fixed4 color : COLOR;
-	};
+			float _Outline;
 
-	struct v2f
-	{
-		float4 pos : SV_POSITION;
-	};
+		fixed4 _OutlineColor;
 
-	fixed _Outline;
-	fixed4 _OutlineColor;
+		struct a2v {
+			float4 vertex : POSITION;
+			float3 normal : NORMAL;
+			float4 texcoord : TEXCOORD0;
+			float4 tangent : TANGENT;
+		};
 
-	v2f vert(appdata v)
-	{
-		v2f o;
+		struct v2f {
+			float4 pos : SV_POSITION;
+			float2 uv : TEXCOORD0;
+			float3 worldViewDir  : TEXCOORD1;
+			float3 worldNormal : TEXCOORD2;
+		};
 
-		float4 vPos = float4(UnityObjectToViewPos(v.vertex),1.0f);
-		float cameraDis = length(vPos.xyz);
-		vPos.xyz += normalize(normalize(vPos.xyz)) * v.color.b;
-		float3 vNormal = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
-		o.pos = mul(UNITY_MATRIX_P,vPos);
-		float2 offset = TransformViewToProjection(vNormal).xy;
-		offset += offset * cameraDis  * v.color.g;
-		o.pos.xy += offset * _Outline* v.color.a;
+		v2f vert(a2v v)
+		{
+			v2f o;
 
-		return o;
-	}
+			float4 pos = mul(UNITY_MATRIX_MV, v.vertex);//顶点变换到视角空间 View Space  
+			float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);//法线变换到视角空间  
+			normal.z = -0.5;
+			float4 newNormal = float4(normalize(normal), 0); //归一化以后的normal  
+			pos = pos + newNormal * _Outline; //沿法线方向扩大_Outline个距离  
+			o.pos = mul(UNITY_MATRIX_P, pos);
 
-	fixed4 frag(v2f i) : SV_Target
-	{
-		fixed4 col = _OutlineColor;
-	return col;
-	}
-		ENDCG
-	}
+			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+			o.worldViewDir = _WorldSpaceCameraPos.xyz - worldPos;//得到世界空间的视线方向  
+			o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
+
+			return o;
+		}
+
+		float4 frag(v2f i) : SV_Target
+		{
+			return float4(_OutlineColor.rgb, 1);;
+		}
+
+			ENDCG
+		}
 
 
 		Pass
@@ -180,7 +183,7 @@
 	finCol.rgb *= lineCol;
 
 	finCol *= _LightColor0* _Color* max(dot(tangentNormal, lightDir) + 0.5, 0);
-	finCol *= 1 +   _Color;
+	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT * _Color;
 
 	finCol.a = mainTex.a;
 

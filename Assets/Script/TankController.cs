@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour {
     GameObject TankObj;
-    public GameObject Turret;//炮台
+    GameObject Turret;//炮台
+    List<GameObject> classis;
     public bool isShoot = false;
     private float angle =0;
     public float Angle
@@ -23,7 +24,7 @@ public class TankController : MonoBehaviour {
 	void Start () {
         InitTank(gameObject);
         //键值对儿的形式保存iTween所用到的参数  
-        
+       
     }
 	
 	// Update is called once per frame
@@ -35,16 +36,17 @@ public class TankController : MonoBehaviour {
             isShoot = false;
         }
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            Angle = -1;
+            Angle = -3;
             
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            Angle = 1;
+            Angle = 3;
         }
         
         if (Input.GetKey(KeyCode.UpArrow)) {
             Shake(0.05f, 2f, iTween.LoopType.none);
+            Walk();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -53,7 +55,13 @@ public class TankController : MonoBehaviour {
     }
     public void InitTank(GameObject tank) {
         TankObj = tank;
+        classis = new List<GameObject>();
         Turret = TankObj.transform.Find("Turret").gameObject;
+        for (int i = 0; i < TankObj.transform.childCount; i++) {
+            if (TankObj.transform.GetChild(i).name.Contains("Chassis")) {
+                classis.Add(TankObj.transform.GetChild(i).gameObject);
+            }
+        }
         Angle = 0;
     }
     void TurretAngle(float angle)
@@ -114,5 +122,22 @@ public class TankController : MonoBehaviour {
             iTween.MoveAdd(TankObj,args);
         }
     }
-
+    public void Walk() {
+        for (int i = 0; i < classis.Count; i++) {
+            Hashtable args = new Hashtable(); 
+            args.Add("rotation", classis[i].GetComponent<MeshRenderer>().bounds.center);
+            //args.Add("scale", msgNotContinue.transform);  
+            // x y z 旋转的角度  
+            args.Add("x", 100);
+            //是世界坐标系还是局部坐标系  
+            args.Add("islocal", true);
+            //游戏对象是否将面向其方向  
+            //args.Add("orienttopath", true);
+            //动画的整体时间。如果与speed共存那么优先speed  
+            args.Add("easeType", iTween.EaseType.linear);
+            args.Add("time", 0.1f);
+            args.Add("loopType", iTween.LoopType.none);
+            iTween.RotateBy(classis[i], args);
+        }
+    }
 }

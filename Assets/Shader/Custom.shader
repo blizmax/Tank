@@ -6,8 +6,6 @@
 		_MainTex("Texture", 2D) = "white" {}
 	_SSSTex("SSS (RGB)", 2D) = "white" {}
 	_ILMTex("ILM (RGB)", 2D) = "white" {}
-	_NormalMap("NormalMap",2D) = "Bump"{}//切线空间
-	_BumpScale("Scale", Range(0,10)) = 1.0
 		_Shininess("Shininess", Range(0.001, 2)) = 0.078125
 		_SpecStep("_SpecStep",Range(0.1,0.3)) = 0.5
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
@@ -25,57 +23,60 @@
 		*/
 		SubShader
 	{
-		Tags{ "RenderType" = "Opaque" }
-
+		Tags{ "RenderType" = "Opaque" "Queue" = "Geometry" }
+		LOD 100
 		Pass
 	{
 		Name "OUTLINE"
-		Tags{ "LightMode" = "Always" }
 		Cull Front
-		ZWrite On
-		ColorMask RGB
 		CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
 
-#include "UnityCG.cginc"
+#pragma vertex vert  
+#pragma fragment frag  
 
-		struct appdata
-	{
-		float4 vertex : POSITION;
-		float3 normal : NORMAL;
-		fixed4 color : COLOR;
-	};
+#include "UnityCG.cginc"  
 
-	struct v2f
-	{
-		float4 pos : SV_POSITION;
-	};
+		float _Outline;
 
-	fixed _Outline;
 	fixed4 _OutlineColor;
 
-	v2f vert(appdata v)
+	struct a2v {
+		float4 vertex : POSITION;
+		float3 normal : NORMAL;
+		float4 texcoord : TEXCOORD0;
+		float4 tangent : TANGENT;
+	};
+
+	struct v2f {
+		float4 pos : SV_POSITION;
+		float2 uv : TEXCOORD0;
+		float3 worldViewDir  : TEXCOORD1;
+		float3 worldNormal : TEXCOORD2;
+	};
+
+	v2f vert(a2v v)
 	{
 		v2f o;
 
-		float4 vPos = float4(UnityObjectToViewPos(v.vertex),1.0f);
-		float cameraDis = length(vPos.xyz);
-		vPos.xyz += normalize(normalize(vPos.xyz)) * v.color.b;
-		float3 vNormal = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
-		o.pos = mul(UNITY_MATRIX_P,vPos);
-		float2 offset = TransformViewToProjection(vNormal).xy;
-		offset += offset * cameraDis  * v.color.g;
-		o.pos.xy += offset * _Outline* v.color.a;
+		float4 pos = mul(UNITY_MATRIX_MV, v.vertex);//顶点变换到视角空间 View Space  
+		float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);//法线变换到视角空间  
+		normal.z = -0.5;
+		float4 newNormal = float4(normalize(normal), 0); //归一化以后的normal  
+		pos = pos + newNormal * _Outline; //沿法线方向扩大_Outline个距离  
+		o.pos = mul(UNITY_MATRIX_P, pos);
+
+		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+		o.worldViewDir = _WorldSpaceCameraPos.xyz - worldPos;//得到世界空间的视线方向  
+		o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
 
 		return o;
 	}
 
-	fixed4 frag(v2f i) : SV_Target
+	float4 frag(v2f i) : SV_Target
 	{
-		fixed4 col = _OutlineColor;
-	return col;
+		return float4(_OutlineColor.rgb, 1);;
 	}
+
 		ENDCG
 	}
 
@@ -141,21 +142,15 @@
 
 	finCol = mainTex;
 
+
 	fixed3 brightCol = mainTex.rgb;
 	fixed3 shadowCol = mainTex.rgb * sssTex.rgb;
 	fixed lineCol = ilmTex.a;
-	lineCol = lerp(lineCol,_DarkenInnerLine,step(lineCol,_DarkenInnerLine));
+	lineCol = lerp(lineCol, _DarkenInnerLine, step(lineCol, _DarkenInnerLine));
 
 	fixed shadowThreshold = ilmTex.g;
 	shadowThreshold *= i.color.r;
 	shadowThreshold = 1 - shadowThreshold + _ShadowContrast;
-
-	fixed4 normalColor = tex2D(_NormalMap, i.uv.zw);
-	//
-	//	fixed3 tangentNormal = normalize(  normalColor.xyz * 2 - 1 ) ; //切线空间下的法线
-	fixed3 tangentNormal = UnpackNormal(normalColor);
-	tangentNormal.xy = tangentNormal.xy*_BumpScale;
-	tangentNormal = normalize(tangentNormal);
 
 	/*fixed3 lightDir = normalize(i.lightDir);*/
 	fixed3 lightDir = normalize(i.lightDir+ _WorldSpaceLightPos0.xyz);
@@ -175,11 +170,11 @@
 	float shadowContrast = step(shadowThreshold, NdotL);
 	finCol.rgb = lerp(shadowCol, brightCol, shadowContrast);
 
-	/*finCol.rgb += shadowCol * 0.5f*step(_SpecStep, ilmTexB*pow(NdotH, _Shininess*ilmTexR * 128)) *shadowContrast;*/
+	finCol.rgb += shadowCol * 0.5f*step(_SpecStep, ilmTexB*pow(NdotH, _Shininess*ilmTexR * 128)) *shadowContrast;
 	finCol.rgb *= lineCol;
 
-	finCol *= _LightColor0 * _Color+ max(dot(tangentNormal, lightDir), 0);
-	finCol *= 1.5 + UNITY_LIGHTMODEL_AMBIENT * _Color;
+	finCol *= _LightColor0;
+	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT;
 
 	finCol.a = mainTex.a;
 
