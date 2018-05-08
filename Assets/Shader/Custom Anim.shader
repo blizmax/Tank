@@ -135,7 +135,7 @@
 	fixed4 frag(v2f i) : SV_Target
 	{
 		fixed4 finCol;
-	float2 offset = float2(0,- _Time.y);
+	float2 offset = float2(0,0);
 	
 	fixed4 mainTex = tex2D(_MainTex,i.uv + offset);
 	fixed4 sssTex = tex2D(_SSSTex,i.uv + offset);

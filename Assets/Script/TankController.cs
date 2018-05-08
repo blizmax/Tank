@@ -1,21 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+
 public class TankController : MonoBehaviour {
     GameObject TankObj;
-    GameObject Turret;//炮台
+    public GameObject Turret;//炮台
     public bool isShoot = false;
-    private Vector3 angle = Vector3.forward;
-    public Vector3 Angle
+    private float angle =0;
+    public float Angle
     {
         set
         {
-            if (angle != value)
-            {
-                angle = value;
-                TurretAngle(angle);
-            }
+            angle = value;
+            TurretAngle(angle);//旋转炮台
+
         }
         get {
             return angle;
@@ -24,53 +22,97 @@ public class TankController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         InitTank(gameObject);
-
+        //键值对儿的形式保存iTween所用到的参数  
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Shake(0.005f,0.3f);
+      
         if (isShoot)
         {
-            Shoot(Angle);
+            Shoot();
             isShoot = false;
         }
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            Angle = new Vector3(0, Angle.y-1f, 0);
+            Angle = -1;
+            
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            Angle = new Vector3(0, Angle.y+1f,0);
+            Angle = 1;
+        }
+        
+        if (Input.GetKey(KeyCode.UpArrow)) {
+            Shake(0.05f, 2f, iTween.LoopType.none);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot(Angle);
+            Shoot();
         }
     }
     public void InitTank(GameObject tank) {
         TankObj = tank;
         Turret = TankObj.transform.Find("Turret").gameObject;
-        angle = TankObj.transform.forward;
+        Angle = 0;
     }
-    void TurretAngle(Vector3 angle)
+    void TurretAngle(float angle)
     {
         if (Turret)
-            Turret.transform.DORotate(angle, 0.5f,RotateMode.Fast);
+        {
+            //Turret.transform.DORotate(angle, 0.5f,RotateMode.Fast);
+            Hashtable args = new Hashtable();
+            //摇摆的幅度  
+            args.Add("y", angle);
+            //是世界坐标系还是局部坐标系  
+            args.Add("islocal", true);
+            //游戏对象是否将面向其方向  
+            //args.Add("orienttopath", true);
+            //动画的整体时间。如果与speed共存那么优先speed  
+            args.Add("easeType", iTween.EaseType.linear);
+            args.Add("time", 0.1f);
+            args.Add("loopType", iTween.LoopType.none);
+            iTween.RotateAdd(Turret, args);
+        }
     }
-    public void Shoot(Vector3 angle) {
-        ForceBack(-Turret.transform.forward * 0.1f,0.1f);
-        Shake(0.008f, 0.1f);
+    public void Shoot() {
+        ForceBack(Turret.transform.forward * 0.1f,0.1f);
+     
     }
-    public void Shake(float strength,float duration) {
+    public void Shake(float strength,float duration, iTween.LoopType loopType) {
         if (TankObj)
         {
-            TankObj.transform.DOShakePosition(duration, strength,0,0);
+            Hashtable args = new Hashtable();
+            //摇摆的幅度  
+            args.Add("amount", new Vector3(strength, 0, strength));  
+            //是世界坐标系还是局部坐标系  
+            args.Add("islocal", true);
+            //游戏对象是否将面向其方向  
+            //args.Add("orienttopath", true);
+            //动画的整体时间。如果与speed共存那么优先speed  
+            args.Add("easeType",iTween.EaseType.linear);
+            args.Add("time", duration);
+            args.Add("loopType", loopType);
+
+            iTween.ShakePosition(TankObj, args);
         }
+       
     }
     public void ForceBack(Vector3 pos,float duration) {
         if (TankObj)
         {
-            TankObj.transform.DOPunchPosition(pos, duration);
+            //TankObj.transform.DOPunchPosition(pos, duration);
+            Hashtable args = new Hashtable();
+            //摇摆的幅度  
+            args.Add("amount", -pos);
+            //是世界坐标系还是局部坐标系  
+            args.Add("islocal", true);
+            //动画的整体时间。如果与speed共存那么优先speed  
+            args.Add("easeType", iTween.EaseType.linear);
+            args.Add("time", duration);
+            args.Add("loopType", iTween.LoopType.none);
+            iTween.MoveAdd(TankObj,args);
         }
     }
+
 }
