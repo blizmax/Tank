@@ -4,10 +4,11 @@
 	{
 		_Color("Color",Color) = (1,1,1,1)
 		_MainTex("Texture", 2D) = "white" {}
-	_SSSTex("SSS (RGB)", 2D) = "white" {}
-	_ILMTex("ILM (RGB)", 2D) = "white" {}
-	_NormalMap("NormalMap",2D) = "Bump"{}//切线空间
-	_BumpScale("Scale", Range(0,10)) = 1.0
+		_SSSTex("SSS (RGB)", 2D) = "white" {}
+		_ILMTex("ILM (RGB)", 2D) = "white" {}
+		_NormalMap("NormalMap",2D) = "Bump"{}//切线空间
+		_BumpScale("Scale", Range(0,10)) = 1.0
+		_Cutoff("Alpha cutoff", Range(0,1)) = 0.5
 		_Shininess("Shininess", Range(0.001, 2)) = 0.078125
 		_SpecStep("_SpecStep",Range(0.1,0.3)) = 0.5
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
@@ -175,11 +176,12 @@
 	float shadowContrast = step(shadowThreshold, NdotL);
 	finCol.rgb = lerp(shadowCol, brightCol, shadowContrast);
 
-	/*finCol.rgb += shadowCol * 0.5f*step(_SpecStep, ilmTexB*pow(NdotH, _Shininess*ilmTexR * 128)) *shadowContrast;*/
+	finCol.rgb += shadowCol * 0.5f*step(_SpecStep, ilmTexB*pow(NdotH, _Shininess*ilmTexR * 128)) *shadowContrast;
 	finCol.rgb *= lineCol;
 
-	finCol *= _LightColor0 * _Color + max(dot(tangentNormal, lightDir), 0);
-	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT * _Color;
+	//finCol *= _LightColor0 * _Color*max(dot(tangentNormal, lightDir)+1, 0);
+	finCol *= _LightColor0 * _Color;
+	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT;
 
 	finCol.a = mainTex.a;
 

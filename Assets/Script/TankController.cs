@@ -124,11 +124,9 @@ public class TankController : MonoBehaviour {
     }
     public void Walk() {
         for (int i = 0; i < classis.Count; i++) {
-            Hashtable args = new Hashtable(); 
-            args.Add("rotation", classis[i].GetComponent<MeshRenderer>().bounds.center);
-            //args.Add("scale", msgNotContinue.transform);  
-            // x y z 旋转的角度  
-            args.Add("x", 100);
+            Hashtable args = new Hashtable();
+            //摇摆的幅度  
+            args.Add("x", 15);
             //是世界坐标系还是局部坐标系  
             args.Add("islocal", true);
             //游戏对象是否将面向其方向  
@@ -137,7 +135,7 @@ public class TankController : MonoBehaviour {
             args.Add("easeType", iTween.EaseType.linear);
             args.Add("time", 0.1f);
             args.Add("loopType", iTween.LoopType.none);
-            iTween.RotateBy(classis[i], args);
+            iTween.RotateAdd(classis[i], args);
         }
     }
 }

@@ -26,7 +26,7 @@
 		void vert (inout appdata_full v, out Input o) {
 			
 			o.color = (v.color);
-			
+			UNITY_INITIALIZE_OUTPUT(Input, o);
       }
 
 		uniform sampler2D _MainTex1, _MainTex2;

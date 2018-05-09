@@ -6,6 +6,8 @@
 		_MainTex("Texture", 2D) = "white" {}
 	_SSSTex("SSS (RGB)", 2D) = "white" {}
 	_ILMTex("ILM (RGB)", 2D) = "white" {}
+
+		
 		_Shininess("Shininess", Range(0.001, 2)) = 0.078125
 		_SpecStep("_SpecStep",Range(0.1,0.3)) = 0.5
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
@@ -23,60 +25,57 @@
 		*/
 		SubShader
 	{
-		Tags{ "RenderType" = "Opaque" "Queue" = "Geometry" }
-		LOD 100
+		Tags{ "RenderType" = "Opaque" }
+
 		Pass
 	{
 		Name "OUTLINE"
+		Tags{ "LightMode" = "Always" }
 		Cull Front
+		ZWrite On
+		ColorMask RGB
 		CGPROGRAM
+#pragma vertex vert
+#pragma fragment frag
 
-#pragma vertex vert  
-#pragma fragment frag  
+#include "UnityCG.cginc"
 
-#include "UnityCG.cginc"  
-
-		float _Outline;
-
-	fixed4 _OutlineColor;
-
-	struct a2v {
+		struct appdata
+	{
 		float4 vertex : POSITION;
 		float3 normal : NORMAL;
-		float4 texcoord : TEXCOORD0;
-		float4 tangent : TANGENT;
+		fixed4 color : COLOR;
 	};
 
-	struct v2f {
+	struct v2f
+	{
 		float4 pos : SV_POSITION;
-		float2 uv : TEXCOORD0;
-		float3 worldViewDir  : TEXCOORD1;
-		float3 worldNormal : TEXCOORD2;
 	};
 
-	v2f vert(a2v v)
+	fixed _Outline;
+	fixed4 _OutlineColor;
+
+	v2f vert(appdata v)
 	{
 		v2f o;
 
-		float4 pos = mul(UNITY_MATRIX_MV, v.vertex);//顶点变换到视角空间 View Space  
-		float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);//法线变换到视角空间  
-		normal.z = -0.5;
-		float4 newNormal = float4(normalize(normal), 0); //归一化以后的normal  
-		pos = pos + newNormal * _Outline; //沿法线方向扩大_Outline个距离  
-		o.pos = mul(UNITY_MATRIX_P, pos);
-
-		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-		o.worldViewDir = _WorldSpaceCameraPos.xyz - worldPos;//得到世界空间的视线方向  
-		o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
+		float4 vPos = float4(UnityObjectToViewPos(v.vertex),1.0f);
+		float cameraDis = length(vPos.xyz);
+		vPos.xyz += normalize(normalize(vPos.xyz)) * v.color.b;
+		float3 vNormal = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
+		o.pos = mul(UNITY_MATRIX_P,vPos);
+		float2 offset = TransformViewToProjection(vNormal).xy;
+		offset += offset * cameraDis  * v.color.g;
+		o.pos.xy += offset * _Outline* v.color.a;
 
 		return o;
 	}
 
-	float4 frag(v2f i) : SV_Target
+	fixed4 frag(v2f i) : SV_Target
 	{
-		return float4(_OutlineColor.rgb, 1);;
+		fixed4 col = _OutlineColor;
+	return col;
 	}
-
 		ENDCG
 	}
 
@@ -114,10 +113,7 @@
 	float4 _MainTex_ST;
 	fixed _ShadowContrast,_DarkenInnerLine,_Shininess,_SpecStep;
 	fixed4 _LightColor0;
-	// fixed4 _WorldLightDir;
-	sampler2D _NormalMap;
-	float4 _NormalMap_ST; // 命名是固定的贴图名+后缀"_ST"，4个值前两个xy表示缩放，后两个zw表示偏移
-	float _BumpScale;
+	fixed4 _WorldLightDir;
 	fixed4 _Color;
 	v2f vert(appdata v)
 	{
@@ -125,9 +121,8 @@
 		o.pos = UnityObjectToClipPos(v.vertex);
 		o.normal = UnityObjectToWorldNormal(v.normal);
 		o.uv.xy = v.texCoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-		o.uv.zw = v.texCoord.xy * _NormalMap_ST.xy + _NormalMap_ST.zw;
 		TANGENT_SPACE_ROTATION;//调用这个后之后，会得到一个矩阵 rotation 
-		//ObjSpaceLightDir(v.vertex)//得到模型空间下的平行光方向 
+							   //ObjSpaceLightDir(v.vertex)//得到模型空间下的平行光方向 
 		o.color = v.color;
 		o.lightDir = mul(rotation, ObjSpaceLightDir(v.vertex));
 		return o;
@@ -142,18 +137,17 @@
 
 	finCol = mainTex;
 
-
 	fixed3 brightCol = mainTex.rgb;
 	fixed3 shadowCol = mainTex.rgb * sssTex.rgb;
 	fixed lineCol = ilmTex.a;
-	lineCol = lerp(lineCol, _DarkenInnerLine, step(lineCol, _DarkenInnerLine));
+	lineCol = lerp(lineCol,_DarkenInnerLine,step(lineCol,_DarkenInnerLine));
 
 	fixed shadowThreshold = ilmTex.g;
 	shadowThreshold *= i.color.r;
 	shadowThreshold = 1 - shadowThreshold + _ShadowContrast;
 
 	/*fixed3 lightDir = normalize(i.lightDir);*/
-	fixed3 lightDir = normalize(i.lightDir+ _WorldSpaceLightPos0.xyz);
+	fixed3 lightDir = normalize(_WorldLightDir.xyz);
 	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);/	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);//normalize(_WorldLightDir.xyz);
 	float3 normalDir = normalize(i.normal);
 
@@ -173,6 +167,7 @@
 	finCol.rgb += shadowCol * 0.5f*step(_SpecStep, ilmTexB*pow(NdotH, _Shininess*ilmTexR * 128)) *shadowContrast;
 	finCol.rgb *= lineCol;
 
+	//finCol *= _LightColor0 * _Color*max(dot(tangentNormal, lightDir)+1, 0);
 	finCol *= _LightColor0;
 	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT;
 

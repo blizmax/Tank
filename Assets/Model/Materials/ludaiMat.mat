@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ludaiMat
-  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
+  m_Shader: {fileID: 4800000, guid: ba6b934c03c3b0543a063a9fa41b5c34, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -39,11 +39,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ILMTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e2c47ae1f9f074a43b46dfdd9300cea5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c88f505236f2ec4438fde1b217029e2b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0995d26790ea54a4a9c0b061b92190e7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -51,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7c72a77dd83374347a52fc7d80d98c02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -67,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SSSTex:
-        m_Texture: {fileID: 2800000, guid: d440902fad11e807d00044888d76c639, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4c7930b3abef5c44fb0f451d09296620, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpScale: 2.75
+    - _BumpScale: 1.12
     - _Cutoff: 0.5
     - _DarkenInnerLine: 1
     - _DetailNormalMapScale: 1
@@ -87,13 +87,14 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.517
     - _GlossyReflections: 1
+    - _InvFade: 1
     - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.01
+    - _Outline: 0.002
     - _Parallax: 0.02
-    - _ShadowContrast: -0.02
-    - _Shininess: 0.06
+    - _ShadowContrast: 0.2
+    - _Shininess: 0.001
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.243
     - _SpecularHighlights: 1
@@ -105,4 +106,5 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
     - _WorldLightDir: {r: 1, g: 1, b: 1, a: 1}

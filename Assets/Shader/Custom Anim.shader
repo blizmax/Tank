@@ -6,8 +6,6 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_SSSTex("SSS (RGB)", 2D) = "white" {}
 		_ILMTex("ILM (RGB)", 2D) = "white" {}
-		_NormalMap("NormalMap",2D) = "Bump"{}//切线空间
-		_BumpScale("Scale", Range(0,10)) = 1.0
 		_Shininess("Shininess", Range(0.001, 2)) = 0.078125
 		_SpecStep("_SpecStep",Range(0.1,0.3)) = 0.5
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
@@ -105,7 +103,7 @@
 	struct v2f
 	{
 		float4 pos : SV_POSITION;
-		float4 uv : TEXCOORD1; // xy存储MainTex的纹理坐标，zw存储NormalMap的纹理坐标
+		float2 uv : TEXCOORD1; // xy存储MainTex的纹理坐标，zw存储NormalMap的纹理坐标
 		fixed4 color : COLOR;
 		float3 normal : NORMAL;
 		float4 vertex : TEXCOORD2;
@@ -116,18 +114,14 @@
 	float4 _MainTex_ST;
 	fixed _ShadowContrast,_DarkenInnerLine,_Shininess,_SpecStep;
 	fixed4 _LightColor0;
-	// fixed4 _WorldLightDir;
-	sampler2D _NormalMap;
-	float4 _NormalMap_ST; // 命名是固定的贴图名+后缀"_ST"，4个值前两个xy表示缩放，后两个zw表示偏移
-	float _BumpScale;
+	fixed4 _WorldLightDir;
 	fixed4 _Color;
 	v2f vert(appdata v)
 	{
 		v2f o;
 		o.pos = UnityObjectToClipPos(v.vertex);
 		o.normal = UnityObjectToWorldNormal(v.normal);
-		o.uv.xy = v.texCoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-		o.uv.zw = v.texCoord.xy * _NormalMap_ST.xy + _NormalMap_ST.zw;
+		o.uv = v.texCoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 		TANGENT_SPACE_ROTATION;//调用这个后之后，会得到一个矩阵 rotation 
 		//ObjSpaceLightDir(v.vertex)//得到模型空间下的平行光方向 
 		o.color = v.color;
@@ -155,14 +149,8 @@
 	shadowThreshold *= i.color.r;
 	shadowThreshold = 1 - shadowThreshold + _ShadowContrast;
 
-	fixed4 normalColor = tex2D(_NormalMap, i.uv.zw+offset);
-	//
-	//	fixed3 tangentNormal = normalize(  normalColor.xyz * 2 - 1 ) ; //切线空间下的法线
-	fixed3 tangentNormal = UnpackNormal(normalColor);
-	tangentNormal.xy = tangentNormal.xy*_BumpScale;
-	tangentNormal = normalize(tangentNormal);
 
-	fixed3 lightDir = normalize(i.lightDir + _WorldSpaceLightPos0.xyz);
+	fixed3 lightDir = normalize(_WorldLightDir.xyz);
 	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);/	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);//normalize(_WorldLightDir.xyz);
 	float3 normalDir = normalize(i.normal);
 	
@@ -182,8 +170,8 @@
 	finCol.rgb += shadowCol * 0.5f*step(_SpecStep,ilmTexB*pow(NdotH,_Shininess*ilmTexR * 128)) *shadowContrast;
 	finCol.rgb *= lineCol;
 
-	finCol *= _LightColor0* _Color* max(dot(tangentNormal, lightDir) + 0.5, 0);
-	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT * _Color;
+	finCol *= _LightColor0* _Color;
+	finCol *= 1 + UNITY_LIGHTMODEL_AMBIENT;
 
 	finCol.a = mainTex.a;
 
