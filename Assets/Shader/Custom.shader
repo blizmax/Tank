@@ -11,7 +11,7 @@
 		_Shininess("Shininess", Range(0.001, 2)) = 0.078125
 		_SpecStep("_SpecStep",Range(0.1,0.3)) = 0.5
 		_OutlineColor("Outline Color", Color) = (0,0,0,1)
-		_Outline("Outline Width", Range(.0,0.01)) = 0.01
+		_Outline("Outline width", Range(.002, 0.03)) = .005
 		_ShadowContrast("Shadow Contrast", Range(-2,1)) = 1
 		_DarkenInnerLine("Darken Inner Line", Range(0, 1)) = 0.2
 

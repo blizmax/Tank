@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: HullMat
-  m_Shader: {fileID: 4800000, guid: 0e542f1b9eb3cb34ab74785769a830fc, type: 3}
+  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
   m_ShaderKeywords: _EMISSION _NORMALMAP
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 2cbab3d61c31fab47b7258f1ff088bf8, type: 3}
+        m_Texture: {fileID: 2800000, guid: e64ec60a45e52c04e9889d18f7a26409, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex1:
@@ -91,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SSSTex:
-        m_Texture: {fileID: 2800000, guid: 4bf16a329b20e42429b8994e231b53b2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 701bcff7f3060aa4190213084b374323, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -114,9 +114,9 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.00154
+    - _Outline: 0.00419
     - _Parallax: 0.02
-    - _ShadowContrast: 0.04
+    - _ShadowContrast: 0.72
     - _Shininess: 0.65
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.3
@@ -127,7 +127,7 @@ Material:
     - _blendPower: 50
     - _cutoff: 5
     m_Colors:
-    - _Color: {r: 0.66176474, g: 0.66176474, b: 0.66176474, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

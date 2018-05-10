@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Turret_02Mat
-  m_Shader: {fileID: 4800000, guid: 0e542f1b9eb3cb34ab74785769a830fc, type: 3}
+  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -51,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4e9e9e42c524c3043be67b2ad354e68e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4de03d6f89f38d24282cdf650bffbd8d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex1:
@@ -83,7 +83,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SSSTex:
-        m_Texture: {fileID: 2800000, guid: ad8d4833306d3a04fb37ffd3c2d4acf4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 701bcff7f3060aa4190213084b374323, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -106,9 +106,9 @@ Material:
     - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.00037
+    - _Outline: 0.00419
     - _Parallax: 0.02
-    - _ShadowContrast: -0.1
+    - _ShadowContrast: 0.18
     - _Shininess: 0.06
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.3
@@ -119,7 +119,7 @@ Material:
     - _blendPower: 50
     - _cutoff: 5
     m_Colors:
-    - _Color: {r: 0.6397059, g: 0.6397059, b: 0.6397059, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
