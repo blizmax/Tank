@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: HullMat
-  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0e542f1b9eb3cb34ab74785769a830fc, type: 3}
   m_ShaderKeywords: _EMISSION _NORMALMAP
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -51,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ILMTex:
-        m_Texture: {fileID: 2800000, guid: 3007d78915bd31c499a3730fd1ca1ea9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1ac272b235f7eb348a206c0d7e724857, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -109,15 +109,15 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.517
+    - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Metallic: 1
+    - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.00124
+    - _Outline: 0.00154
     - _Parallax: 0.02
-    - _ShadowContrast: -0.32
-    - _Shininess: 0.001
+    - _ShadowContrast: 0.04
+    - _Shininess: 0.65
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.3
     - _SpecularHighlights: 1

@@ -50,6 +50,8 @@
 	struct v2f
 	{
 		float4 pos : SV_POSITION;
+		UNITY_FOG_COORDS(0)
+			fixed4 color : COLOR;
 	};
 
 	fixed _Outline;
@@ -58,16 +60,18 @@
 	v2f vert(appdata v)
 	{
 		v2f o;
+		o.pos = UnityObjectToClipPos(v.vertex);
 
-		float4 vPos = float4(UnityObjectToViewPos(v.vertex),1.0f);
-		float cameraDis = length(vPos.xyz);
-		vPos.xyz += normalize(normalize(vPos.xyz)) * v.color.b;
-		float3 vNormal = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
-		o.pos = mul(UNITY_MATRIX_P,vPos);
-		float2 offset = TransformViewToProjection(vNormal).xy;
-		offset += offset * cameraDis  * v.color.g;
-		o.pos.xy += offset * _Outline* v.color.a;
+		float3 norm = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, v.normal));
+		float2 offset = TransformViewToProjection(norm.xy);
 
+#ifdef UNITY_Z_0_FAR_FROM_CLIPSPACE //to handle recent standard asset package on older version of unity (before 5.5)
+		o.pos.xy += offset * UNITY_Z_0_FAR_FROM_CLIPSPACE(o.pos.z) * _Outline;
+#else
+		o.pos.xy += offset * o.pos.z * _Outline;
+#endif
+		o.color = _OutlineColor;
+		UNITY_TRANSFER_FOG(o, o.pos);
 		return o;
 	}
 
@@ -140,17 +144,14 @@
 	fixed3 brightCol = mainTex.rgb;
 	fixed3 shadowCol = mainTex.rgb * sssTex.rgb;
 	fixed lineCol = ilmTex.a;
-	lineCol = lerp(lineCol,_DarkenInnerLine,step(lineCol,_DarkenInnerLine));
+	lineCol = lerp(lineCol, _DarkenInnerLine, step(lineCol, _DarkenInnerLine));
 
 	fixed shadowThreshold = ilmTex.g;
 	shadowThreshold *= i.color.r;
 	shadowThreshold = 1 - shadowThreshold + _ShadowContrast;
 
-	/*fixed3 lightDir = normalize(i.lightDir);*/
-	fixed3 lightDir = normalize(_WorldLightDir.xyz);
-	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);/	//float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);//normalize(_WorldLightDir.xyz);
 	float3 normalDir = normalize(i.normal);
-
+	float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);//normalize(_WorldLightDir.xyz);
 
 	float3 viewDir = normalize(UnityWorldSpaceViewDir(i.vertex));
 	float3 halfDir = normalize(viewDir + lightDir);

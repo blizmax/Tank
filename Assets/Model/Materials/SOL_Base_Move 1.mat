@@ -49,11 +49,11 @@ Material:
     m_Floats:
     - <noninit>: 0
     - _BumpScale: 1
-    - _DarkenInnerLine: 0.28
-    - _Outline: 0.0048
-    - _ShadowContrast: -0.65
-    - _Shininess: 0.09
-    - _SpecStep: 0.1
+    - _DarkenInnerLine: 0
+    - _Outline: 0.00227
+    - _ShadowContrast: -0.76
+    - _Shininess: 0.001
+    - _SpecStep: 0.3
     m_Colors:
     - <noninit>: {r: 0, g: 4.363873e-33, b: 0, a: 4.3638494e-33}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

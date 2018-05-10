@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Turret_02Mat
-  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0e542f1b9eb3cb34ab74785769a830fc, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -108,7 +108,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 0.00037
     - _Parallax: 0.02
-    - _ShadowContrast: -0.16
+    - _ShadowContrast: -0.1
     - _Shininess: 0.06
     - _SmoothnessTextureChannel: 0
     - _SpecStep: 0.3
