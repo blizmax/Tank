@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SOL_Base_Move 2
+  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - <noninit>:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 5703c51238e0285488b96fbc16983df2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ILMTex:
+        m_Texture: {fileID: 2800000, guid: ac6f0e62b2195f5409f20a3bd4b1da3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 124cec12e69d8f942b18beaf4723b438, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SSSTex:
+        m_Texture: {fileID: 2800000, guid: cf07a0e1852dd5742833974ffd9f0e88, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - <noninit>: 0
+    - _BumpScale: 1
+    - _DarkenInnerLine: 0
+    - _Outline: 0.00227
+    - _ShadowContrast: -0.76
+    - _Shininess: 0.001
+    - _SpecStep: 0.3
+    m_Colors:
+    - <noninit>: {r: 0, g: 4.363873e-33, b: 0, a: 4.3638494e-33}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _WorldLightDir: {r: 1, g: 1, b: 1, a: 1}
