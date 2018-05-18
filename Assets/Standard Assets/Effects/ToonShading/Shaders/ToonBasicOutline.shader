@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Toon/Basic Outline" {
 	Properties {
 		_Color ("Main Color", Color) = (.5,.5,.5,1)
@@ -8,11 +6,12 @@ Shader "Toon/Basic Outline" {
 		_MainTex ("Base (RGB)", 2D) = "white" { }
 		_ToonShade ("ToonShader Cubemap(RGB)", CUBE) = "" { }
 	}
-	
-	CGINCLUDE
-	#include "UnityCG.cginc"
-	
-	struct appdata {
+
+	SubShader {
+		CGINCLUDE
+#include "UnityCG.cginc"
+
+		struct appdata {
 		float4 vertex : POSITION;
 		float3 normal : NORMAL;
 	};
@@ -20,31 +19,29 @@ Shader "Toon/Basic Outline" {
 	struct v2f {
 		float4 pos : SV_POSITION;
 		UNITY_FOG_COORDS(0)
-		fixed4 color : COLOR;
+			fixed4 color : COLOR;
 	};
-	
+
 	uniform float _Outline;
 	uniform float4 _OutlineColor;
-	
+
 	v2f vert(appdata v) {
 		v2f o;
 		o.pos = UnityObjectToClipPos(v.vertex);
 
-		float3 norm   = normalize(mul ((float3x3)UNITY_MATRIX_IT_MV, v.normal));
+		float3 norm = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, v.normal));
 		float2 offset = TransformViewToProjection(norm.xy);
 
-		#ifdef UNITY_Z_0_FAR_FROM_CLIPSPACE //to handle recent standard asset package on older version of unity (before 5.5)
-			o.pos.xy += offset * UNITY_Z_0_FAR_FROM_CLIPSPACE(o.pos.z) * _Outline;
-		#else
-			o.pos.xy += offset * o.pos.z * _Outline;
-		#endif
+#ifdef UNITY_Z_0_FAR_FROM_CLIPSPACE //to handle recent standard asset package on older version of unity (before 5.5)
+		o.pos.xy += offset * UNITY_Z_0_FAR_FROM_CLIPSPACE(o.pos.z) * _Outline;
+#else
+		o.pos.xy += offset * o.pos.z * _Outline;
+#endif
 		o.color = _OutlineColor;
 		UNITY_TRANSFER_FOG(o,o.pos);
 		return o;
 	}
 	ENDCG
-
-	SubShader {
 		Tags { "RenderType"="Opaque" }
 		UsePass "Toon/Basic/BASE"
 		Pass {

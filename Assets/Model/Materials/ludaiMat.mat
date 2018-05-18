@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ludaiMat
-  m_Shader: {fileID: 4800000, guid: ba6b934c03c3b0543a063a9fa41b5c34, type: 3}
+  m_Shader: {fileID: 4800000, guid: 90b12eeb5d276264d8725f363ebbfeed, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -38,8 +38,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EnvMapSampler:
+        m_Texture: {fileID: 2800000, guid: 763c5d30206d1d54a9b49b3309e37fe1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FalloffSampler:
+        m_Texture: {fileID: 2800000, guid: cc8f70f2ec571e9478efa98c041cde7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ILMTex:
-        m_Texture: {fileID: 2800000, guid: e2c47ae1f9f074a43b46dfdd9300cea5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 663b2dbac9ecea64194b5c8cc3d6a852, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -54,6 +62,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7c72a77dd83374347a52fc7d80d98c02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalMapSampler:
+        m_Texture: {fileID: 2800000, guid: f90e3449ad3674016962a3aba3d31a06, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -63,15 +75,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: d440902fad11e807d00044888d76c639, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RimLightSampler:
+        m_Texture: {fileID: 2800000, guid: a18067604964b5a4d8fd5552ed0d789e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SSSTex:
-        m_Texture: {fileID: 2800000, guid: 4c7930b3abef5c44fb0f451d09296620, type: 3}
+        m_Texture: {fileID: 2800000, guid: 701bcff7f3060aa4190213084b374323, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularReflectionSampler:
+        m_Texture: {fileID: 2800000, guid: e8b5fb4ca0fdd2c4eadc7cbe065543a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ToonShade:
@@ -80,10 +100,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1.12
-    - _Cutoff: 0.5
-    - _DarkenInnerLine: 1
+    - _Cutoff: 1
+    - _DarkenInnerLine: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EdgeThickness: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.517
     - _GlossyReflections: 1
@@ -93,18 +114,20 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 0.002
     - _Parallax: 0.02
-    - _ShadowContrast: 0.2
+    - _ShadowContrast: 0.59
     - _Shininess: 0.001
     - _SmoothnessTextureChannel: 0
-    - _SpecStep: 0.243
+    - _SpecStep: 0.1
     - _SpecularHighlights: 1
+    - _SpecularPower: 20
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8088235, g: 0.8088235, b: 0.8088235, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 0.553}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-    - _WorldLightDir: {r: 1, g: 1, b: 1, a: 1}
+    - _WorldLightDir: {r: 0, g: 0, b: 0, a: 0}

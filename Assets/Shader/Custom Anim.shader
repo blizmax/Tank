@@ -12,7 +12,6 @@
 		_Outline("Outline Width", Range(.0,0.01)) = 0.01
 		_ShadowContrast("Shadow Contrast", Range(-2,1)) = 1
 		_DarkenInnerLine("Darken Inner Line", Range(0, 1)) = 0.2
-
 		_WorldLightDir("_WorldLightDir",Vector) = (1,1,1,1)
 	}
 		/*
